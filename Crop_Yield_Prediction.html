@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="style.css">
+<div class="header">
+    <img src="Logo.png" class="logo">
+    <div class="header-text">
+        <h1 align="center">Crop Yield Prediction</h1>
+    </div>
+</div>
+<div class="div">
+    <div class="field">
+        <label>Year:</label>
+        <input type="number" id="year" min="1900" max="2100">
+    </div>
+    <div class="field">
+        <label>Pesticides (kg/ha):</label>
+        <input type="number" id="pesticides">
+    </div>
+    <div class="field">
+        <label>Rainfall (mm):</label>
+        <input type="number" id="rainfall">
+    </div>
+    <div class="field">
+        <label>Temperature (°C):</label>
+        <input type="number" id="temperature">
+    </div>
+    <button onclick="predict()">Predict</button>
+    <p id="result"></p>
+</div>
+<script>
+function predict(){
+    if(
+        document.getElementById("year").value=="" ||
+        document.getElementById("pesticides").value=="" ||
+        document.getElementById("rainfall").value=="" ||
+        document.getElementById("temperature").value==""
+    ){
+        alert("Please fill all the fields");
+        return;
+    }
+        var year=Number(document.getElementById("year").value);
+        if (year<1900 || year>2100){
+            alert("Please enter year between 1900 to 2100");
+            return;
+        }
+        var pesticides=Number(document.getElementById("pesticides").value);
+        if (pesticides<0){
+            alert("Pesticides cannot be negative");
+            return;
+        }
+        var rainfall=Number(document.getElementById("rainfall").value);
+        if (rainfall<0){
+            alert("Rainfall cannot be negative");
+            return;
+        }
+    var data={
+        country: localStorage.getItem("country"),
+        crop:localStorage.getItem("crop"),
+        year:year,
+        pesticides:pesticides,
+        rainfall:rainfall,
+        temperature:Number(document.getElementById("temperature").value)
+    };
+    fetch("http://127.0.0.1:8000/predict",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    })
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(data){
+        document.getElementById("result").innerHTML="🌾 Predicted Yield:<br><br><strong>"+data.predicted_yield+" hg/ha</strong>";
+    });
+}
+</script>
+</body>
+</html>

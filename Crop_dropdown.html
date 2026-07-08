@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="style.css">
+<div class="header">
+    <img src="Logo.png" class="logo">
+    <div class="header-text">
+        <h1>Select Crop</h1>
+    </div>
+</div>
+<div class="div">
+<label for="crop">Choose your crop for yield prediction</label><br>
+<select id="crop"></select>
+<br><br>
+<button onclick="goNext()">Next</button>
+</div>
+<script>
+    function formatName(name){
+        return name.replace(/\b\w/g,function(l){
+            return l.toUpperCase();
+        });
+    }
+    var country=localStorage.getItem("country");
+    fetch("http://127.0.0.1:8000/crops/"+country)
+    .then(function(res){
+        return res.json();
+    })
+    .then (function(data){
+        var select=document.getElementById("crop");
+        for(var i=0;i<data.crops.length;i++){
+            var option=document.createElement("option");
+            option.value=data.crops[i];
+            option.innerHTML=formatName(data.crops[i]);
+            select.appendChild(option);
+        }
+    });
+    function goNext(){
+        var crop=document.getElementById("crop").value;
+        localStorage.setItem("crop",crop);
+        window.location.href="Crop_Yield_Prediction.html";
+    }
+</script>
+</body>
+</html>
