@@ -10,13 +10,17 @@ The system analyzes different agricultural parameters such as crop type, country
 
 * 🌾 Crop yield prediction using Machine Learning
 * 🌍 Country and crop based prediction
+* 🌱 Dynamic crop selection based on selected country
+* 📅 Year-based prediction
 * 🌧️ Rainfall and temperature analysis
 * 🧪 Pesticide usage impact analysis
 * 📊 Data preprocessing and feature engineering
 * 🤖 Machine Learning based prediction model
 * 🌐 Interactive web interface
 * ⚡ FastAPI backend integration
-
+* 📱 Mobile-responsive frontend
+* 💻 Desktop and mobile support
+* 🚀 Production deployment
 ---
 
 ## 🧠 Machine Learning Approach
@@ -38,7 +42,6 @@ The project uses Machine Learning algorithms to learn patterns from historical a
 | Pesticides      | Amount of pesticide usage         |
 | Rainfall        | Average rainfall                  |
 | Temperature     | Average temperature               |
-| Production Data | Historical production information |
 
 ### Output
 
@@ -53,6 +56,14 @@ The model predicts:
 ```text
 Smart-Crop-Yield-Predictor/
 
+│
+├── Dataset/
+│   ├── Production_Crops_Livestock_E_All_Data.csv
+│   ├── pesticides.csv
+│   ├── rainfall.csv
+│   ├── temp.csv
+│   ├── yield.csv
+│   └── yield_df.csv
 │
 ├── Background.jpg
 ├── Crop_Yield_Prediction.html
@@ -72,7 +83,9 @@ Smart-Crop-Yield-Predictor/
 ├── tempCodeRunnerFile.py
 ├── test.py
 ├── yield.py
-└── yield_df.py
+├── yield_df.py
+├── requirements.txt
+└── .gitignore
 ```
 
 ---
@@ -104,6 +117,15 @@ Smart-Crop-Yield-Predictor/
 
 * Joblib
 
+### Version Control
+
+* Git
+* GitHub
+
+### Deployment
+
+* Vercel
+
 ---
 
 ## 🔄 Project Workflow
@@ -116,6 +138,9 @@ Data Cleaning & Preprocessing
           |
           ↓
 Feature Engineering
+          |
+          ↓
+Feature Encoding
           |
           ↓
 Machine Learning Model Training
@@ -131,10 +156,11 @@ Web Interface
           |
           ↓
 Crop Yield Prediction
+          |
+          ↓
+Production Deployment
+
 ```
-
----
-
 ## 📊 Data Processing
 
 The dataset is processed through multiple steps:
@@ -145,6 +171,9 @@ The dataset is processed through multiple steps:
 * Feature encoding
 * Merging agricultural and environmental datasets
 * Preparing data for Machine Learning models
+* Cleaning categorical data
+* Restructuring yearly agricultural data
+* Feature engineering
 
 ---
 
@@ -156,6 +185,7 @@ The trained model and encoders are stored as:
 * `encoders.pkl`
 
 These files are loaded by the backend to generate predictions.
+The encoders are used to transform categorical features such as country and crop into numerical values required by the Machine Learning model.
 
 ---
 
@@ -167,27 +197,26 @@ These files are loaded by the backend to generate predictions.
 git clone https://github.com/Kartavya-Jain/Smart-Crop-Yield-Predictor.git
 ```
 
-### 2. Install Dependencies
+### 2. Navigate to Project Directory
+
+```bash
+cd Smart-Crop-Yield-Predictor
+```
+
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Start FastAPI Server
+### 4. Start FastAPI Server
 
 ```bash
 uvicorn app:app --reload
 ```
-
-### 4. Run Frontend
-
-Open:
-
-```text
-index.html
-```
-
-in your browser.
+The application will be available at
+http://127.0.0.1:8000
+Open the application through the FastAPI server rather than opening the HTML files directly.
 
 ---
 
