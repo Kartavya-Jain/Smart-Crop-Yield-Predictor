@@ -2,25 +2,27 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import joblib
+from pathlib import Path
 from basemodelcls import CropInput
 import pandas as pd
-base=pd.read_csv(r"Smart_Crop_Yield_Predictor.csv")
+BASE_DIR=Path(__file__).resolve().parent
 app=FastAPI()
-model=joblib.load("crop_yield_predictor_model.pkl")
-encoders=joblib.load("encoders.pkl")
+base=pd.read_csv(BASE_DIR / "Smart_Crop_Yield_Predictor.csv")
+model=joblib.load(BASE_DIR / "crop_yield_predictor_model.pkl")
+encoders=joblib.load(BASE_DIR / "encoders.pkl")
 app.mount("/static", StaticFiles(directory="."), name="static")
 print(encoders.keys())
 print(encoders["Area"].classes_)
 print(model.n_features_in_)
 @app.get("/")
 def Home():
-    return FileResponse("index.html")
+    return FileResponse(BASE_DIR / "index.html")
 @app.get("/Crop_dropdown.html")
 def crop_dropdown():
-    return FileResponse("Crop_dropdown.html")
+    return FileResponse(BASE_DIR / "Crop_dropdown.html")
 @app.get("/Crop_Yield_Prediction.html")
 def crop_yield_prediction():
-    return FileResponse("Crop_Yield_Prediction.html")
+    return FileResponse(BASE_DIR / "Crop_Yield_Prediction.html")
 @app.post("/predict")
 def predict(data: CropInput):
     country=data.country.lower()
