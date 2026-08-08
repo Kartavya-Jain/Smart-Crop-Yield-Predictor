@@ -15,6 +15,12 @@ print(model.n_features_in_)
 @app.get("/")
 def Home():
     return FileResponse("index.html")
+@app.get("/Crop_dropdown.html")
+def crop_dropdown():
+    return FileResponse("Crop_dropdown.html")
+@app.get("/Crop_Yield_Prediction.html")
+def crop_yield_prediction():
+    return FileResponse("Crop_Yield_Prediction.html")
 @app.post("/predict")
 def predict(data: CropInput):
     country=data.country.lower()
